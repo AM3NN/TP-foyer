@@ -32,6 +32,8 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "universite_id")
     private Universite universite;
+    @Column(name = "nom_universite")
+    private String nomUniversite;
 
     // Ensure getter and setter for Chambre exist
     public void setChambre(Chambre chambre) {
