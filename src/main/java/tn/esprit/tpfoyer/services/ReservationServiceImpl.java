@@ -1,30 +1,30 @@
 package tn.esprit.tpfoyer.services;
 
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.tpfoyer.entities.Reservation;
 import tn.esprit.tpfoyer.repositories.IReservationRepository;
 
-import java.util.Date;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
-public class ReservationServiceImpl implements IReservationServices{
+public class ReservationServiceImpl implements IReservationServices {
 
-    IReservationRepository reservationRepository;
+    private final IReservationRepository reservationRepository;
+
+    @Autowired
+    public ReservationServiceImpl(IReservationRepository reservationRepository) {
+        this.reservationRepository = reservationRepository;
+    }
 
     @Override
     public List<Reservation> retrieveAllReservation() {
-        return reservationRepository.findAll();
+        return (List<Reservation>) reservationRepository.findAll();
     }
 
     @Override
     public Reservation updateReservation(Reservation res) {
-        if (reservationRepository.existsById(Long.valueOf(res.getIdReservation()))) {
-            return reservationRepository.save(res);
-        }
-        return null;
+        return reservationRepository.save(res);
     }
 
     @Override
@@ -33,8 +33,15 @@ public class ReservationServiceImpl implements IReservationServices{
     }
 
     @Override
-    public List<Reservation> getReservationParAnneeUniversitaireEtNomUniversite(Date anneeUniversite, String nomUniversite) {
+    public List<Reservation> getReservationParAnneeUniversitaireEtNomUniversite(int anneeUniversitaire, String nomUniversite) {
+        return reservationRepository.findByAnneeUniversitaireAndNomUniversite(anneeUniversitaire, nomUniversite);
+    }
 
-            return reservationRepository.findByAnneeUniversitaireAndNomUniversite(anneeUniversite, nomUniversite);
-        }
+    @Override
+    public Reservation ajouterReservation(long idBloc, long cinEtudiant) {
+        // Assuming you have some logic here to add a reservation
+        Reservation reservation = new Reservation();
+        // Set the fields based on the logic
+        return reservationRepository.save(reservation);
+    }
 }

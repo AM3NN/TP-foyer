@@ -1,12 +1,9 @@
 package tn.esprit.tpfoyer.services;
 
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.tpfoyer.entities.Chambre;
-import tn.esprit.tpfoyer.entities.TypeChambre;
-import tn.esprit.tpfoyer.repositories.IChambreReposirtory;
+import tn.esprit.tpfoyer.repositories.IChambreRepository;
 
 import java.util.List;
 
@@ -14,11 +11,11 @@ import java.util.List;
 
 public class ChambreServiceImpl implements IChambreServices {
     @Autowired
-    public ChambreServiceImpl(IChambreReposirtory chambreRepository) {
+    public ChambreServiceImpl(IChambreRepository chambreRepository) {
         this.chambreRepository = chambreRepository;
     }
 
-    private final IChambreReposirtory chambreRepository;
+    private final IChambreRepository chambreRepository;
 
     @Override
     public List<Chambre> retrieveAllChambres() {
@@ -43,18 +40,8 @@ public class ChambreServiceImpl implements IChambreServices {
         return chambreRepository.findById(idChambre).orElse(null);
     }
 
-    @Override
-    public List<Chambre> getChambresNonReserveParNomUniversiteEtTypeChambre(String nomUniversite, TypeChambre type) {
-        return chambreRepository.findChambresNonReservees(nomUniversite, type);
-    }
 
-    @Override
-    public List<Chambre> getChambresParBlocEtType(Long idBloc, TypeChambre typeC) {
-        // Solution 1 : JPQL
-        // return chambreRepository.findChambresParBlocEtTypeJPQL(idBloc, typeC);
 
-        // Solution 2 : Keywords
-        return chambreRepository.findByBlocIdBlocAndType(idBloc, typeC);
-    }
+
 
 }

@@ -1,4 +1,5 @@
 package tn.esprit.tpfoyer.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,13 +20,18 @@ public class Bloc {
     private Long capaciteBloc;
 
     @ManyToOne
+    @JsonIgnore
     private Foyer foyer;
 
     @OneToMany(mappedBy = "bloc")
+    @JsonIgnore
     private List<Chambre> chambres ;
 
     public Long getIdBloc() {
         return idBloc;
+    }
+    public void setFoyer(Foyer foyer) {
+        this.foyer = foyer;
     }
 
 
